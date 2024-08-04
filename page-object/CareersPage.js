@@ -6,7 +6,7 @@ export class CareersPage {
         this.page = page;
         this.careersPage = page.locator('span.header--nav-label:has-text("Careers")');
         this.careerURL = 'https://symphony.is/careers';
-        this.openingJobsLocator = page.locator(".currentOpenings--job");
+        this.openingJobsLocator = page.locator("//li[contains(@class, 'currentOpenings--job')]");
         this.jobTitleLocator = page.locator(".currentOpenings--job-title");
         this.jobLocationLocator = page.locator(".currentOpenings--job-locationWrapper-name");
         this.jobTypeLocator = page.locator(".currentOpenings--job-type");
@@ -57,5 +57,19 @@ export class CareersPage {
         const numberOfJobOpenings = jobElements.length;
 
         return numberOfJobOpenings;
+    }
+    searchForJob = async (jobTitle) => {
+        await this.page.waitForSelector(this.openingJobsLocator._selector, { state: 'visible' });
+        const jobElements = await this.openingJobsLocator.all();
+
+        for (const jobElement of jobElements) {
+            const title = await jobElement.locator(this.jobTitleLocator).textContent();
+
+            if (title === jobTitle) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

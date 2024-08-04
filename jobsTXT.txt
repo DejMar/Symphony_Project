@@ -1,5 +1,9 @@
-Head of Workforce Management, Bosnia & Herzegovina, Hybrid
+Branch Manager, Belgrade, Serbia, Hybrid
+Medior Frontend Engineer (React.js), Bosnia & Herzegovina, Hybrid
+Senior Frontend Engineer (Angular), Bosnia & Herzegovina, Hybrid
 QA Automation Engineer, North Macedonia, 
+Home Assistant Programmer, Sarajevo, B&H, On-site
+KNX Configuration Technician, Sarajevo, B&H, On-site
 AI/ML Engineer, Serbia, Hybrid
 Data Engineer, Serbia, Hybrid
 Lead QA Automation Engineer, Serbia, 

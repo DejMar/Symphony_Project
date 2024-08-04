@@ -1,6 +1,16 @@
 [
   {
-    "title": "Head of Workforce Management",
+    "title": "Branch Manager",
+    "location": "Belgrade, Serbia",
+    "type": "Hybrid"
+  },
+  {
+    "title": "Medior Frontend Engineer (React.js)",
+    "location": "Bosnia & Herzegovina",
+    "type": "Hybrid"
+  },
+  {
+    "title": "Senior Frontend Engineer (Angular)",
     "location": "Bosnia & Herzegovina",
     "type": "Hybrid"
   },
@@ -8,6 +18,16 @@
     "title": "QA Automation Engineer",
     "location": "North Macedonia",
     "type": ""
+  },
+  {
+    "title": "Home Assistant Programmer",
+    "location": "Sarajevo, B&H",
+    "type": "On-site"
+  },
+  {
+    "title": "KNX Configuration Technician",
+    "location": "Sarajevo, B&H",
+    "type": "On-site"
   },
   {
     "title": "AI/ML Engineer",
