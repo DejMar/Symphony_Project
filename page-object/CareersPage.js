@@ -34,7 +34,15 @@ export class CareersPage {
         }
 
         const fs = require('fs');
-        fs.writeFileSync('jobsJSON.json', JSON.stringify(jobs, null, 2));
+        const path = require('path');
+        const testResultsDir = path.join(__dirname, '..', 'test-results');
+        
+        if (!fs.existsSync(testResultsDir)) {
+            fs.mkdirSync(testResultsDir, { recursive: true });
+        }
+        const filePath = path.join(testResultsDir, `jobsJSON_${new Date().toISOString().split('T')[0]}.json`);
+
+        fs.writeFileSync(filePath, JSON.stringify(jobs, null, 2));
     }
 
     createTXTFile = async () => {
@@ -49,7 +57,16 @@ export class CareersPage {
         }
 
         const fs = require('fs');
-        fs.writeFileSync('jobsTXT.txt', jobs.join('\n'), 'utf8');
+        const path = require('path');
+        const testResultsDir = path.join(__dirname, '..', 'test-results');
+        
+        if (!fs.existsSync(testResultsDir)) {
+            fs.mkdirSync(testResultsDir, { recursive: true });
+        }
+
+        const filePath = path.join(testResultsDir, `jobsTXT_${new Date().toISOString().split('T')[0]}.txt`);
+
+        fs.writeFileSync(filePath, jobs.join('\n'), 'utf8');
     }
 
     countJobOpenings = async () => {

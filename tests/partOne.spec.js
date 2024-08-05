@@ -40,11 +40,11 @@ test.describe('Part one - tests', () => {
     await careersPage.verifyCareersPage();
     await careersPage.createJSONfile();
   });
-  test.only('TC05 - Search for QA Automation Engineer job', async ({ }) => {
+
+  test('TC05 - Search for QA Automation Engineer job', async ({ }) => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const jobExists = await careersPage.searchJobTitle('QA Automation Engineer');
-    console.log(jobExists)
     expect(jobExists).toBeTruthy();
   });
 })
