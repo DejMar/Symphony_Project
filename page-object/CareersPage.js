@@ -70,25 +70,11 @@ export class CareersPage {
     }
 
     countJobOpenings = async () => {
-        await this.page.waitForSelector(this.openingJobsLocator._selector, { state: 'visible' });
-        const jobElements = await this.openingJobsLocator.all();
+        await this.page.waitForSelector(this.jobTitleLocator._selector, { state: 'visible' });
+        const jobElements = await this.jobTitleLocator.allTextContents();
         const numberOfJobOpenings = jobElements.length;
 
         return numberOfJobOpenings;
-    }
-    
-    searchForJob = async (jobTitle) => {
-        await this.page.waitForSelector(this.openingJobsLocator._selector, { state: 'visible' });
-        const jobElements = await this.openingJobsLocator.all();
-
-        for (const jobElement of jobElements) {
-            const title = await jobElement.locator(this.jobTitleLocator).textContent();
-
-            if (title === jobTitle) {
-                return true;
-            }
-        }
-        return false;
     }
         
     searchJobTitle = async (jobTitle) => {
@@ -96,5 +82,18 @@ export class CareersPage {
         const jobTitles = await this.jobTitleLocator.allTextContents();
         
         return jobTitles.includes(jobTitle);
+    }
+
+    searchJobTitleContains = async (searchString) => {
+        await this.page.waitForSelector(this.jobTitleLocator._selector, { state: 'visible' });
+        const jobTitles = await this.jobTitleLocator.allTextContents();
+        
+        let count = 0;
+        for (const title of jobTitles) {
+            if (title.toLowerCase().includes(searchString.toLowerCase())) {
+                count++;
+            }
+        }
+        return count;
     }
 }
