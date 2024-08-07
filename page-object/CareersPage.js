@@ -12,7 +12,7 @@ export class CareersPage {
         this.jobLocationLocator = page.locator(".currentOpenings--job-locationWrapper-name");
         this.jobTypeLocator = page.locator(".currentOpenings--job-type");
     }
-
+//#region Methods
     navigateToCareersPage = async () => {
         await this.careersPage.hover();
         await this.careersPage.click();
@@ -96,4 +96,5 @@ export class CareersPage {
         }
         return count;
     }
+    //#endregion
 }

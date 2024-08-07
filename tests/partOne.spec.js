@@ -18,7 +18,7 @@ test.describe('Part one - tests', () => {
     await page.setViewportSize({ width: 1920, height: 1080 });
   });
 
-  test('TC01 - Verify Company Details on Home page', async ({ page }) => {
+  test('TC01 - Verify Company Details on Home page', async ({ }) => {
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
     await companyPage.verifyCompanyDetails();
