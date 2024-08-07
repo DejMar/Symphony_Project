@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../page-object/HomePage';
 import { CompanyPage } from '../page-object/CompanyPage';
 import { CareersPage } from '../page-object/careersPage';
+import { SharedStep } from '../helper/SharedSteps';
+import { comparingLinks } from "../data/dataLinks.js";
+import exp from 'constants';
 
 test.describe('Part one - tests', () => {
   let homePage;
@@ -57,8 +60,10 @@ test.describe('Part one - tests', () => {
   });
 
   test('TC07 - Create JSON file with company details ', async ({ }) => {
+    let sharedStep = new SharedStep();
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
-    await companyPage.createCompanyInfoJSON();
+    const compared = await sharedStep.compareJsonFiles(comparingLinks.dataPath, comparingLinks.companyInfoFile, comparingLinks.testResultsPath, comparingLinks.actualCompanyInfo);
+    expect(compared).toBeTruthy();
   });
 })
