@@ -4,7 +4,6 @@ import { CompanyPage } from '../page-object/CompanyPage';
 import { CareersPage } from '../page-object/careersPage';
 import { SharedStep } from '../helper/SharedSteps';
 import { comparingLinks } from "../data/dataLinks.js";
-import exp from 'constants';
 
 test.describe('Part one - tests', () => {
   let homePage;
@@ -20,7 +19,6 @@ test.describe('Part one - tests', () => {
   });
 
   test('TC01 - Verify Company Details on Home page', async ({ page }) => {
-    //let homePage = new HomePage(page);
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
     await companyPage.verifyCompanyDetails();
@@ -55,15 +53,16 @@ test.describe('Part one - tests', () => {
   test('TC06 - Search for all QA jobs', async ({ }) => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
-    const jobExists = await careersPage.searchJobTitleContains('QA');
-    expect(jobExists).toBe(2);
+    const searchedJobs = await careersPage.searchJobTitleContains('QA');
+    expect(searchedJobs).toBe(2);
   });
 
   test('TC07 - Compare JSON files for company details', async ({ }) => {
     let sharedStep = new SharedStep();
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
-    const compared = await sharedStep.compareJsonFiles(comparingLinks.dataPath, comparingLinks.companyInfoFile, comparingLinks.testResultsPath, comparingLinks.actualCompanyInfo);
-    expect(compared).toBeTruthy();
+    await companyPage.createCompanyInfoJSON();
+    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.dataPath, comparingLinks.companyInfoFile, comparingLinks.testResultsPath, comparingLinks.actualCompanyInfo);
+    expect(comparedFiles).toBeTruthy();
   });
 })
