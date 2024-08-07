@@ -55,4 +55,10 @@ test.describe('Part one - tests', () => {
     const jobExists = await careersPage.searchJobTitleContains('QA');
     expect(jobExists).toBe(2);
   });
+
+  test('TC07 - Create JSON file with company details ', async ({ }) => {
+    await homePage.navigateToCompanyPage();
+    await companyPage.verifyCompanyPage();
+    await companyPage.createCompanyInfoJSON();
+  });
 })

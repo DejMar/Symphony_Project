@@ -37,4 +37,30 @@ export class CompanyPage {
         //expect(certifications.map(cert => cert.trim())).toEqual(expectedValues.certifications);
         expect(certifications).toEqual(expectedValues.certifications);
     }
+
+    createCompanyInfoJSON = async () => {
+        await this.page.waitForSelector('.pageMetaDetails--list', { state: 'visible' });
+
+        const companyInfo = {
+            hq: await this.hqLocator.textContent(),
+            founded: await this.foundedLocator.textContent(),
+            size: await this.sizeLocator.textContent(),
+            consultingLocations: await this.consultingLocationsLocator.allTextContents(),
+            engineeringHubs: await this.engineeringHubsLocator.allTextContents(),
+            clients: await this.clientsLocator.textContent(),
+            certifications: await this.certificationsLocator.allTextContents()
+        };
+
+        const fs = require('fs');
+        const path = require('path');
+        const testResultsDir = path.join(__dirname, '..', 'test-results');
+        
+        if (!fs.existsSync(testResultsDir)) {
+            fs.mkdirSync(testResultsDir, { recursive: true });
+        }
+
+        const filePath = path.join(testResultsDir, `companyInfo_${new Date().toISOString().split('T')[0]}.json`);
+
+        fs.writeFileSync(filePath, JSON.stringify(companyInfo, null, 2), 'utf8');
+    }
 }
