@@ -59,7 +59,7 @@ test.describe('Part one - tests', () => {
     expect(jobExists).toBe(2);
   });
 
-  test('TC07 - Create JSON file with company details ', async ({ }) => {
+  test('TC07 - Compare JSON files for company details', async ({ }) => {
     let sharedStep = new SharedStep();
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
