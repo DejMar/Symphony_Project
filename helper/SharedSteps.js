@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export class SharedStep {
+export class SharedSteps {
     constructor(page) {
         this.page = page;
         this.cookieOKButton = "//button[@class='cookiesBanner--btn cookiesBanner--btn_purple']";
@@ -21,5 +21,25 @@ export class SharedStep {
         if (await acceptButton.count() > 0) {
             await acceptButton.click();
         }
+    }
+
+    async selectRandomOption(selector) {
+        await this.page.waitForSelector(selector);
+
+        const randomOption = await this.page.evaluate((sel) => {
+            const select = document.querySelector(sel);
+            const options = Array.from(select.options).slice(1); // Exclude the first option
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const selectedOption = options[randomIndex];
+            select.value = selectedOption.value;
+            select.dispatchEvent(new Event('change'));
+            return {
+                value: selectedOption.value,
+                text: selectedOption.text
+            };
+        }, selector);
+
+        console.log(`Selected random option: ${randomOption.text}`);
+        return randomOption.text;
     }
 }

@@ -3,7 +3,7 @@ import { HomePage } from '../page-object/HomePage';
 import { CompanyPage } from '../page-object/CompanyPage';
 import { CareersPage } from '../page-object/careersPage';
 import { CaseStudiesPage } from '../page-object/CaseStudiesPage.js';
-import { SharedStep } from '../helper/SharedSteps';
+import { SharedSteps } from '../helper/SharedSteps';
 import { comparingLinks } from "../data/dataLinks.js";
 
 test.describe('Part one - tests', () => {
@@ -61,19 +61,23 @@ test.describe('Part one - tests', () => {
   });
 
   test('TC07 - Compare JSON files for company details', async ({ }) => {
-    let sharedStep = new SharedStep();
+    let sharedSteps = new SharedSteps();
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
     await companyPage.createCompanyInfoJSON();
-    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.companyInfoFile, comparingLinks.actualPath, comparingLinks.actualCompanyInfo);
+    const comparedFiles = await sharedSteps.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.companyInfoFile, comparingLinks.actualPath, comparingLinks.actualCompanyInfo);
     expect(comparedFiles).toBeTruthy();
   });
 
   test('TC08 - Verify Case studies are displayed', async ({ }) => {
-    let sharedStep = new SharedStep();
+    let sharedSteps = new SharedSteps();
     await homePage.navigateToCaseStudiesPage();
     await caseStudiesPage.createCaseStudiesJSON();
-    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.caseStudyFile, comparingLinks.actualPath, comparingLinks.actualCaseStudy);
+    const comparedFiles = await sharedSteps.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.caseStudyFile, comparingLinks.actualPath, comparingLinks.actualCaseStudy);
     expect(comparedFiles).toBeTruthy();
+    const selectedIndustry = await caseStudiesPage.selectRandomIndustry();
+    const selectedService = await caseStudiesPage.selectRandomService();
+    const tagsVerified = await caseStudiesPage.verifySelectedIndustryAndServiceTags(selectedIndustry, selectedService);
+    expect(tagsVerified).toBeTruthy();
   });
 })
