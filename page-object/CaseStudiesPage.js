@@ -5,7 +5,6 @@ export class CaseStudiesPage {
     constructor(page) {
         this.page = page;
         this.sharedSteps = new SharedSteps(page);
-
         this.caseStudiesListSelector = '.caseStudiesList--cards';
         this.caseStudyCardSelector = '.caseStudyCard';
         this.tagSelector = '.caseStudyCard--tags-tag';
@@ -13,10 +12,13 @@ export class CaseStudiesPage {
         this.descriptionSelector = '.caseStudyCard--description';
         this.industrySelector = '.caseStudiesHeader--container-form-fields-field.defaultOption--select';
         this.serviceSelector = '.caseStudiesHeader--container-form-fields-field.defaultOption--select[placeholder="Service"]';
+        this.clearFiltersButton = "button.caseStudiesHeader--container-form-button";
+
     }
 
-    navigateToCareerPage = async () => {
-        
+    async clearFilters() {
+        await this.page.waitForSelector(this.clearFiltersButton);
+        await this.page.click(this.clearFiltersButton);
     }
 
     async createCaseStudiesJSON() {
@@ -53,6 +55,7 @@ export class CaseStudiesPage {
     async selectRandomService() {
         return this.sharedSteps.selectRandomOption(this.serviceSelector);
     }
+    
     async verifySelectedIndustryAndServiceTags(selectedIndustry, selectedService) {
         await this.page.waitForSelector(this.caseStudyCardSelector);
 

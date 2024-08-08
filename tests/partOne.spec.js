@@ -69,7 +69,7 @@ test.describe('Part one - tests', () => {
     expect(comparedFiles).toBeTruthy();
   });
 
-  test('TC08 - Verify Case studies are displayed', async ({ }) => {
+  test.only('TC08 - Verify Case studies are displayed', async ({ }) => {
     let sharedSteps = new SharedSteps();
     await homePage.navigateToCaseStudiesPage();
     await caseStudiesPage.createCaseStudiesJSON();
