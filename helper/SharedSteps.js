@@ -16,6 +16,7 @@ export class SharedSteps {
     
         return JSON.stringify(file1) === JSON.stringify(file2);
     }
+    
     async acceptCookies() {
         const acceptButton = this.cookieOKButton;
         if (await acceptButton.count() > 0) {
@@ -28,7 +29,7 @@ export class SharedSteps {
 
         const randomOption = await this.page.evaluate((sel) => {
             const select = document.querySelector(sel);
-            const options = Array.from(select.options).slice(1); // Exclude the first option
+            const options = Array.from(select.options); // Include all options
             const randomIndex = Math.floor(Math.random() * options.length);
             const selectedOption = options[randomIndex];
             select.value = selectedOption.value;
