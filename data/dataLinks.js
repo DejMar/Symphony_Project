@@ -7,5 +7,4 @@ export const comparingLinks = {
 
     caseStudyFile: 'caseStudies.json',
     actualCaseStudy: `caseStudies_${new Date().toISOString().split('T')[0]}.json`,
-
 }

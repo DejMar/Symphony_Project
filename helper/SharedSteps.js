@@ -18,9 +18,12 @@ export class SharedSteps {
     }
     
     async acceptCookies() {
-        const acceptButton = this.cookieOKButton;
-        if (await acceptButton.count() > 0) {
-            await acceptButton.click();
+        try {
+            await this.page.waitForSelector(this.cookieOKButton, { state: 'visible', timeout: 5000 });
+            await this.page.click(this.cookieOKButton);
+            console.log('Cookies accepted');
+        } catch (error) {
+            console.log('Cookie banner not found or already accepted');
         }
     }
 

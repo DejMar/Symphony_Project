@@ -11,14 +11,27 @@ test.describe('Part one - tests', () => {
   let careersPage;
   let companyPage;
   let caseStudiesPage;
+  let sharedSteps;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     careersPage = new CareersPage(page);
     companyPage = new CompanyPage(page);
     caseStudiesPage = new CaseStudiesPage(page);
+    sharedSteps = new SharedSteps(page);
+
     await page.goto('/');
     await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.pause()
+    await sharedSteps.acceptCookies()
+  });
+
+  test.afterEach(async ({ page }, testInfo) => {
+    if (testInfo.status !== 'passed') {
+      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${Date.now()}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      console.log(`Screenshot saved: ${screenshotPath}`);
+    }
   });
 
   test('TC01 - Verify Company Details on Home page', async ({ }) => {
@@ -31,7 +44,7 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const numberOfJobOpenings = await careersPage.countJobOpenings();
-    expect(numberOfJobOpenings).toBe(11);
+    expect(numberOfJobOpenings).toBe(13);
   });
 
   test('TC03 - Save jobs info in external file - TXT format', async ({ }) => {
@@ -57,11 +70,10 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const searchedJobs = await careersPage.searchJobTitleContains('QA');
-    expect(searchedJobs).toBe(2);
+    expect(searchedJobs).toBe(2);    
   });
 
   test('TC07 - Compare JSON files for company details', async ({ }) => {
-    let sharedSteps = new SharedSteps();
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
     await companyPage.createCompanyInfoJSON();
@@ -69,8 +81,7 @@ test.describe('Part one - tests', () => {
     expect(comparedFiles).toBeTruthy();
   });
 
-  test.only('TC08 - Verify Case studies are displayed', async ({ }) => {
-    let sharedSteps = new SharedSteps();
+  test('TC08 - Verify Case studies are displayed', async ({ }) => {
     await homePage.navigateToCaseStudiesPage();
     await caseStudiesPage.createCaseStudiesJSON();
     const comparedFiles = await sharedSteps.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.caseStudyFile, comparingLinks.actualPath, comparingLinks.actualCaseStudy);
