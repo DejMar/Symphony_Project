@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../page-object/HomePage';
 import { CompanyPage } from '../page-object/CompanyPage';
 import { CareersPage } from '../page-object/careersPage';
+import { CaseStudiesPage } from '../page-object/CaseStudiesPage.js';
 import { SharedStep } from '../helper/SharedSteps';
 import { comparingLinks } from "../data/dataLinks.js";
 
@@ -9,11 +10,13 @@ test.describe('Part one - tests', () => {
   let homePage;
   let careersPage;
   let companyPage;
+  let caseStudiesPage;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     careersPage = new CareersPage(page);
     companyPage = new CompanyPage(page);
+    caseStudiesPage = new CaseStudiesPage(page);
     await page.goto('/');
     await page.setViewportSize({ width: 1920, height: 1080 });
   });
@@ -62,7 +65,15 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCompanyPage();
     await companyPage.verifyCompanyPage();
     await companyPage.createCompanyInfoJSON();
-    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.dataPath, comparingLinks.companyInfoFile, comparingLinks.testResultsPath, comparingLinks.actualCompanyInfo);
+    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.companyInfoFile, comparingLinks.actualPath, comparingLinks.actualCompanyInfo);
+    expect(comparedFiles).toBeTruthy();
+  });
+
+  test('TC08 - Verify Case studies are displayed', async ({ }) => {
+    let sharedStep = new SharedStep();
+    await homePage.navigateToCaseStudiesPage();
+    await caseStudiesPage.createCaseStudiesJSON();
+    const comparedFiles = await sharedStep.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.caseStudyFile, comparingLinks.actualPath, comparingLinks.actualCaseStudy);
     expect(comparedFiles).toBeTruthy();
   });
 })

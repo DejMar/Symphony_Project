@@ -1,4 +1,6 @@
 import { expect } from '@playwright/test';
+import fs from 'fs';
+import path from 'path';
 
 export class CareersPage {
 
@@ -33,8 +35,8 @@ export class CareersPage {
             jobs.push({ title, location, type });
         }
 
-        const fs = require('fs');
-        const path = require('path');
+        //const fs = require('fs');
+        //const path = require('path');
         const testResultsDir = path.join(__dirname, '..', 'test-results');
         
         if (!fs.existsSync(testResultsDir)) {
@@ -56,8 +58,8 @@ export class CareersPage {
             jobs.push(`${title}, ${location}, ${type}`);
         }
 
-        const fs = require('fs');
-        const path = require('path');
+        //const fs = require('fs');
+        //const path = require('path');
         const testResultsDir = path.join(__dirname, '..', 'test-results');
         
         if (!fs.existsSync(testResultsDir)) {

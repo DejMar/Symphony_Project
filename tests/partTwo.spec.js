@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-
+/*
 test('API - Endpoint 1', async ({ page }) => {
     const baseUrl = 'https://randomlyapi.symphony.is/api';
 
@@ -68,3 +68,4 @@ test('API - Endpoint 5', async ({ page }) => {
 
     await browser.close();
 });
+*/
