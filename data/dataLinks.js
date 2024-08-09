@@ -7,4 +7,10 @@ export const comparingLinks = {
 
     caseStudyFile: 'caseStudies.json',
     actualCaseStudy: `caseStudies_${new Date().toISOString().split('T')[0]}.json`,
+
+    openJobPositionsFile: 'openJobPositions.json',
+    actualOpenJobs: `jobsJSON_${new Date().toISOString().split('T')[0]}.json`,
+
+    openJobPositionsTXTFile: 'openJobPositions.txt',
+    actualOpenJobsTXT: `jobsTXT_${new Date().toISOString().split('T')[0]}.txt`,
 }

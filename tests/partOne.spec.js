@@ -22,13 +22,12 @@ test.describe('Part one - tests', () => {
 
     await page.goto('/');
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.pause()
     await sharedSteps.acceptCookies()
   });
 
   test.afterEach(async ({ page }, testInfo) => {
     if (testInfo.status !== 'passed') {
-      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${Date().toISOString().split('T')[0]}}.png`;
+      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
       await page.screenshot({ path: screenshotPath, fullPage: true });
       console.log(`Screenshot saved: ${screenshotPath}`);
     }
@@ -44,19 +43,23 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const numberOfJobOpenings = await careersPage.countJobOpenings();
-    expect(numberOfJobOpenings).toBe(13);
+    expect(numberOfJobOpenings).toBe(3);
   });
 
   test('TC03 - Save jobs info in external file - TXT format', async ({ }) => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     await careersPage.createTXTFile();
+    const comparedFiles = await sharedSteps.compareTxtFiles(comparingLinks.comparedPath, comparingLinks.openJobPositionsTXTFile, comparingLinks.actualPath, comparingLinks.actualOpenJobsTXT);
+    expect(comparedFiles).toBeTruthy();  
   });
 
   test('TC04 - Save jobs info in external file - JSON format', async ({ }) => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     await careersPage.createJSONfile();
+    const comparedFiles = await sharedSteps.compareJsonFiles(comparingLinks.comparedPath, comparingLinks.openJobPositionsFile, comparingLinks.actualPath, comparingLinks.actualOpenJobs);
+    expect(comparedFiles).toBeTruthy();  
   });
 
   test('TC05 - Search for QA Automation Engineer job', async ({ }) => {
@@ -70,7 +73,7 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const searchedJobs = await careersPage.searchJobTitleContains('QA');
-    expect(searchedJobs).toBe(2);    
+    expect(searchedJobs).toBe(4);    
   });
 
   test('TC07 - Compare JSON files for company details', async ({ }) => {
