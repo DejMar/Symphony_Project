@@ -27,7 +27,6 @@ test.describe('Part one - tests', () => {
 
   test.afterEach(async ({ page }, testInfo) => {
     await sharedSteps.takeScreenshotOnFailure(page, testInfo);
-
   });
 
   test('TC01 - Verify Company Details on Home page', async ({ }) => {
