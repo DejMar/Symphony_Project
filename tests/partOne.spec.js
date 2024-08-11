@@ -26,11 +26,8 @@ test.describe('Part one - tests', () => {
   });
 
   test.afterEach(async ({ page }, testInfo) => {
-    if (testInfo.status !== 'passed') {
-      const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
-      await page.screenshot({ path: screenshotPath, fullPage: true });
-      console.log(`Screenshot saved: ${screenshotPath}`);
-    }
+    await sharedSteps.takeScreenshotOnFailure(page, testInfo);
+
   });
 
   test('TC01 - Verify Company Details on Home page', async ({ }) => {

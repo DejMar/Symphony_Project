@@ -55,4 +55,12 @@ export class SharedSteps {
         console.log(`Selected random option: ${randomOption.text}`);
         return randomOption.text;
     }
+
+    async takeScreenshotOnFailure(page, testInfo) {
+        if (testInfo.status !== 'passed') {
+          const screenshotPath = `screenshots/${testInfo.title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.png`;
+          await page.screenshot({ path: screenshotPath, fullPage: true });
+          console.log(`Screenshot saved: ${screenshotPath}`);
+        }
+      }
 }
