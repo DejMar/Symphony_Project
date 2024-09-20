@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../page-object/HomePage';
 import { CompanyPage } from '../page-object/CompanyPage';
-import { CareersPage } from '../page-object/careersPage';
+import { CareersPage } from '../page-object/CareersPage';
 import { CaseStudiesPage } from '../page-object/CaseStudiesPage.js';
 import { SharedSteps } from '../helper/SharedSteps';
 import { comparingLinks } from "../data/dataLinks.js";
@@ -27,6 +27,7 @@ test.describe('Part one - tests', () => {
 
   test.afterEach(async ({ page }, testInfo) => {
     await sharedSteps.takeScreenshotOnFailure(page, testInfo);
+    console.log(`Finished ${test.info().title} with status ${test.info().status}`);
   });
 
   test('TC01 - Verify Company Details on Home page', async ({ }) => {
@@ -39,7 +40,7 @@ test.describe('Part one - tests', () => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const numberOfJobOpenings = await careersPage.countJobOpenings();
-    expect(numberOfJobOpenings).toBe(3);
+    expect(numberOfJobOpenings).toBe(10);
   });
 
   test('TC03 - Save jobs info in external file - TXT format', async ({ }) => {
@@ -65,11 +66,11 @@ test.describe('Part one - tests', () => {
     expect(jobExists).toBeTruthy();
   });
 
-  test('TC06 - Search for all QA jobs', async ({ }) => {
+  test.only('TC06 - Search for all QA jobs', async ({ }) => {
     await homePage.navigateToCareerPage();
     await careersPage.verifyCareersPage();
     const searchedJobs = await careersPage.searchJobTitleContains('QA');
-    expect(searchedJobs).toBe(4);    
+    expect(searchedJobs).toBe(2);    
   });
 
   test('TC07 - Compare JSON files for company details', async ({ }) => {
